@@ -1,6 +1,6 @@
 ## How to embed Delphix CLI command in a bash script
 
-You can manage the Delphix virtualization engine using the command line interface (CLI). To connect to it, you will need to use any SSH client from your machine. Enter the username followed by either the name or IP address of the Delphix engine. An example is as follow:
+You can manage the Delphix virtualization engine using the command line interface (CLI). To connect to it, you will need to use any SSH client from your machine. Enter the username followed by either the name or IP address (e.g. 10.10.10.1) of the Delphix engine. An example is as follow:
 ```
 ssh delphix@10.10.10.1
 ```
