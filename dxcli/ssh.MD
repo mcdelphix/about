@@ -74,17 +74,15 @@ To modify the GUI Idle timeout setting of any user, you can create the following
 ```
 #!/bin/bash
 
-dlphx_user=$1
-dlphx_sessTO=$2
-
-ssh admin@10.0.1.10 >./run.log 2>./run.err "$( cat <<'EOT'
-select $dlphx_user
+cat > ./input.txt <<EOF
+select $1
 update 
-set sessionTimeout=$dlphx_sessTO
+set sessionTimeout=$2
 commit
 exit
-EOT
-)"
+EOF
+
+ssh admin@10.0.1.10 >./run.log 2>./run.err < ./input.txt
 ```
 
 To set the timeout for the user admin to 900 seconds, enter the following
