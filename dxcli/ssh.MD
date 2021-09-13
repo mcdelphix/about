@@ -67,3 +67,30 @@ ssh -tt admin@10.0.1.10 >./runcmd.log 2>./runcmd.err <runcmd.txt
 ```
 
 When you run `sh ./runcmd.sh`, it will list the current user and output the result to `./runcmd.log` and any errors in  `./runcmd.err`.
+
+--------------------------------
+
+To modify the GUI Idle timeout setting of any user, you can create the following script (set_timeout.sh):
+```
+#!/bin/bash
+
+dlphx_user=$1
+dlphx_sessTO=$2
+
+ssh admin@10.0.1.10 >./run.log 2>./run.err "$( cat <<'EOT'
+select $dlphx_user
+update 
+set sessionTimeout=$dlphx_sessTO
+commit
+exit
+EOT
+)"
+```
+
+To set the timeout for the user admin to 900 seconds, enter the following
+```
+./set_timeout.sh admin 900
+```
+
+Reference:  
+[Delphix KB on modifying the GUI idle timeout](https://support.delphix.com/Archived_Articles/Modifying_the_GUI_Idle_Timeout_Setting_(KBA1575))
