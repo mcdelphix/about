@@ -32,7 +32,7 @@ ssh delphix@10.10.10.1
 
 ------------------------
 
-Once you have that setup, you can embed the commands in bash script file. Create a bash script file (./run.sh) similar to the following:
+Once you have that setup, you can embed the commands in bash script file. Create a bash script file (*./run.sh*) similar to the following:
 ```
 #!/bin/bash
 
@@ -59,7 +59,7 @@ ls
 exit
 ```
 
-You will then create a launcher script (./runcmd.sh) with the following lines:
+You will then create a launcher script (*./runcmd.sh*) with the following lines:
 ```
 #!/bin/bash
 
@@ -70,7 +70,7 @@ When you run `sh ./runcmd.sh`, it will list the current user and output the resu
 
 --------------------------------
 
-To modify the GUI Idle timeout setting of any user, you can create the following script (set_timeout.sh):
+To modify the GUI Idle timeout setting of any user, you can create the following script (*set_timeout.sh*):
 ```
 #!/bin/bash
 
@@ -89,7 +89,7 @@ EOF
 ssh -tt admin@10.0.1.10 >./run.log 2>./run.err < $cmdFile
 ```
 
-To set the timeout for the user admin to 900 seconds, enter the following
+To set the timeout for the user **admin** to **900** seconds, enter the following
 ```
 ./set_timeout.sh admin 900
 ```
