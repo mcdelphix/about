@@ -51,7 +51,7 @@ ls
 exit
 ```
 
-You will then create a launcher script (./runcmd.sh) with the following content:
+You will then create a launcher script (./runcmd.sh) with the following lines:
 ```
 #!/bin/bash
 
