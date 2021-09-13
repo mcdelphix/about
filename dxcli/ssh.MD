@@ -74,6 +74,8 @@ To modify the GUI Idle timeout setting of any user, you can create the following
 ```
 #!/bin/bash
 
+[ $# -lt 2 ] && { echo "Usage: $0 Delphix_User Timeout_Sec"; exit 1; }
+
 cat > ./input.txt <<EOF
 select $1
 update 
