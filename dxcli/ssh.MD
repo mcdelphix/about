@@ -7,10 +7,10 @@ ssh delphix@10.10.10.1
 
 For a passwordless access to the engine, you can generate a new authentication key pairs (public/private) using the ssh-keygen and associate the public key to the Delphix user. To set it up, enter the following:
 ```
-10-10-10-1> user current
-10-10-10-1 user "delphix"> update
-10-10-10-1 user "delphix" update *> set publicKey="[CONTENT OF THE PUBLIC KEY=/home/delphix/internal/demo-scripts/dxkey.pub]"
-10-10-10-1 user "delphix" update *> commit
+ip-10-10-10-1> user current
+ip-10-10-10-1 user "delphix"> update
+ip-10-10-10-1 user "delphix" update *> set publicKey="[CONTENT OF THE PUBLIC KEY=/home/delphix/internal/demo-scripts/dxkey.pub]"
+ip-10-10-10-1 user "delphix" update *> commit
 ```
 
 Once you have set it up, you can then connect to the engine using the following command:
@@ -76,7 +76,9 @@ To modify the GUI Idle timeout setting of any user, you can create the following
 
 [ $# -lt 2 ] && { echo "Usage: $0 Delphix_User Timeout_Sec"; exit 1; }
 
-cat > ./input.txt <<EOF
+cmdFile=./input.txt
+
+cat > $cmdFile  <<EOF
 select $1
 update 
 set sessionTimeout=$2
@@ -84,7 +86,7 @@ commit
 exit
 EOF
 
-ssh admin@10.0.1.10 >./run.log 2>./run.err < ./input.txt
+ssh -tt admin@10.0.1.10 >./run.log 2>./run.err < $cmdFile
 ```
 
 To set the timeout for the user admin to 900 seconds, enter the following
