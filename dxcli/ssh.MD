@@ -5,7 +5,15 @@ You can manage the Delphix virtualization engine using the command line interfac
 ssh delphix@10.10.10.1
 ```
 
-For a passwordless access to the engine, you can generate a keypair using the ssh-keygen and associate the public key to the Delphix user. Once you have set it up, you can then connect to the engine using the following command:
+For a passwordless access to the engine, you can generate a new authentication key pairs (public/private) using the ssh-keygen and associate the public key to the Delphix user. To set it up, enter the following:
+```
+10-10-10-1> user current
+10-10-10-1 user "delphix"> update
+10-10-10-1 user "delphix" update *> set publicKey="[CONTENT OF THE PUBLIC KEY=/home/delphix/internal/demo-scripts/dxkey.pub]"
+10-10-10-1 user "delphix" update *> commit
+```
+
+Once you have set it up, you can then connect to the engine using the following command:
 ```
 ssh -i /home/delphix/internal/demo-scripts/dxkey delphix@10.10.10.1
 ```
