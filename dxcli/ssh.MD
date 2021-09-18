@@ -96,5 +96,101 @@ To set the timeout for the user **admin** to **900** seconds, enter the followin
 ./set_timeout.sh admin 900
 ```
 
+
+--------------------------------
+
+To change the password of a Delphix user, you can create the following script (*set_password.sh*):
+```
+#!/bin/bash
+
+[ $# -lt 2 ] && { echo "Usage: $0 Delphix_User NewPassword"; exit 1; }
+
+cmdFile=./input.txt
+
+cat > $cmdFile  <<EOF
+select $1
+updateCredential
+set newCredential.password=$2
+commit
+exit
+EOF
+
+ssh -tt admin@10.0.1.10 >./run.log 2>./run.err < $cmdFile
+```
+
+To set the timeout for the user **john** to **900** seconds, enter the following
+```
+./set_password.sh john s3cr3t99
+```
+
+--------------------------------
+
+To add a Windows environment, you can create the following script (*add_winenviron.sh*):
+```
+#!/bin/bash
+
+[ $# -lt 2 ] && { echo "Usage: $0 Delphix_User NewPassword"; exit 1; }
+
+cmdFile=./input.txt
+
+cat > $cmdFile  <<EOF
+
+/environment
+create
+set type=HostEnvironmentCreateParameters
+set hostEnvironment.type=WindowsHostEnvironment
+set hostEnvironment.name=<Source environment name>
+set hostEnvironment.proxy=<target host name>
+set hostParameters.type=WindowsHostCreateParameters
+set hostParameters.host.type=WindowsHost
+set hostParameters.host.addresses="<Source host IP address or hostname>"
+set primaryUser.name="<domain\username>"
+set primaryUser.credential.type=PasswordCredential
+set primaryUser.credential.password=<password>
+commit
+exit
+EOF
+
+ssh -tt admin@10.0.1.10 >./run.log 2>./run.err < $cmdFile
+```
+
+To set the timeout for the user **admin** to **900** seconds, enter the following
+```
+./add_winenviron.sh admin s3cr3t99
+```
+
+--------------------------------
+
+To add a Linux environment, you can create the following script (*add_lnxenviron.sh*):
+```
+#!/bin/bash
+
+[ $# -lt 2 ] && { echo "Usage: $0 Delphix_User NewPassword"; exit 1; }
+
+cmdFile=./input.txt
+
+cat > $cmdFile  <<EOF
+
+environment create
+set type=HostEnvironmentCreateParameters
+set hostEnvironment.type=UnixHostEnvironment
+set hostParameters.type=UnixHostCreateParameters
+set primaryUser.credential.type=PasswordCredential
+set hostParameters.host.addresses="<Source host IP address or hostname>"
+set hostParameters.host.toolkit=/var/delphix
+set primaryUser.name=oracle
+set primaryUser.credential.password=<password>
+commit
+exit
+EOF
+
+ssh -tt admin@10.0.1.10 >./run.log 2>./run.err < $cmdFile
+```
+
+To set the timeout for the user **admin** to **900** seconds, enter the following
+```
+./add_lnxenviron.sh admin s3cr3t99
+```
+
 Reference:  
 [Delphix KB on modifying the GUI idle timeout](https://support.delphix.com/Archived_Articles/Modifying_the_GUI_Idle_Timeout_Setting_(KBA1575))
