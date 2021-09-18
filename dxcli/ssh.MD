@@ -192,5 +192,58 @@ To set the timeout for the user **admin** to **900** seconds, enter the followin
 ./add_lnxenviron.sh admin s3cr3t99
 ```
 
+--------------------------------
+
+To list the timeflow , you can create the following script (*list_timeflow.sh*):
+```
+#!/bin/bash
+
+[ $# -lt 0 ] && { echo "Usage: $0 "; exit 1; }
+
+cmdFile=./input.txt
+
+cat > $cmdFile  <<EOF
+timeflow
+ls
+commit
+exit
+EOF
+
+ssh -tt admin@10.0.1.10 >./run.log 2>./run.err < $cmdFile
+```
+
+To list the timeflows, enter the following
+```
+./list_timeflow.sh
+```
+
+--------------------------------
+
+To take a snapshot, create the following script (*take_snapshot.sh*):
+```
+#!/bin/bash
+
+[ $# -lt 1 ] && { echo "Usage: $0 VDB_name"; exit 1; }
+
+cmdFile=./input.txt
+
+cat > $cmdFile  <<EOF
+database
+select $1
+sync
+commit
+/snapshot
+ls
+exit
+EOF
+
+ssh -tt admin@10.0.1.10 >./run.log 2>./run.err < $cmdFile
+```
+
+To snapshot the VDB vdb_test, enter the following
+```
+./take_snapshot.sh vdb_test
+```
+
 Reference:  
 [Delphix KB on modifying the GUI idle timeout](https://support.delphix.com/Archived_Articles/Modifying_the_GUI_Idle_Timeout_Setting_(KBA1575))
